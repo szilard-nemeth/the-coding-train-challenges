@@ -2,7 +2,8 @@ let num = "10101001";
 
 let byte = [];
 let decimalP;
-let shifButton;
+let shitLeftButton;
+let shitRightButton;
 
 function mousePressed() {
   for (let i = 0; i < byte.length; i++) {
@@ -14,8 +15,10 @@ function setup() {
 	createCanvas(400, 100);
     binaryToDecimal(num);
     decimalP = createDiv('');
-    shiftButton = createButton(">>");
-    shiftButton.mousePressed(shiftBits);
+    shiftLeftButton = createButton("<<");
+    shiftLeftButton.mousePressed(shiftBitsLeft);
+    shiftRightButton = createButton(">>");
+    shiftRightButton.mousePressed(shiftBitsRight);
 
     let w = width / 8;
     for (let i = 0; i < 8; i++) {
@@ -25,10 +28,24 @@ function setup() {
     }
 }
 
-function shiftBits() {
+function shiftBitsLeft() {
+  shiftBits("left");
+}
+
+function shiftBitsRight() {
+  shiftBits("right");
+}
+
+function shiftBits(direction) {
   let num = getBinaryString();
   let val = binaryToDecimal(num);
-  val = val >> 1;
+
+  if (direction === "left") {
+    val = val << 1;
+  } else if (direction == "right") {
+    val = val >> 1;
+  }
+  
   num = decimalToBinary(val);
 
   for (let i = 0; i < 8; i++) {
